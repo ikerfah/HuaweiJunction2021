@@ -103,6 +103,10 @@ class MainViewModel extends ChangeNotifier {
     return _companies;
   }
 
+  Deal getDealById(int dealId) {
+    return _deals.firstWhere((element) => element.id == dealId);
+  }
+
   Company getCompanyById(int companyId) {
     return _companies.firstWhere((element) => element.id == companyId);
   }

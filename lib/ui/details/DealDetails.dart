@@ -38,6 +38,7 @@ class _DealDetailsState extends State<DealDetails> {
   Widget build(BuildContext context) {
     return Consumer<MainViewModel>(builder: (context, mainViewModel, child) {
       Company company = mainViewModel.getCompanyById(widget.deal.companyId);
+      Deal deal = mainViewModel.getDealById(widget.deal.id);
       return Scaffold(
         body: Column(
           children: [
@@ -86,7 +87,7 @@ class _DealDetailsState extends State<DealDetails> {
                   Hero(
                     tag: widget.deal.heroTag(),
                     child: ItemDeal(
-                      deal: widget.deal,
+                      deal: deal,
                     ),
                   ),
                   _detailsListTile(
@@ -100,24 +101,24 @@ class _DealDetailsState extends State<DealDetails> {
                     icon: Icons.link,
                   ),
                   _detailsListTile(
-                    title: widget.deal.dealValidity,
+                    title: deal.dealValidity,
                     icon: Icons.av_timer,
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 15.0),
                     child: TextButton(
-                      onPressed: widget.deal.isApplied
+                      onPressed: deal.isApplied
                           ? null
-                          : () => {mainViewModel.claimOffer(widget.deal)},
+                          : () => {mainViewModel.claimOffer(deal)},
                       style: TextButton.styleFrom(
                         backgroundColor:
-                            widget.deal.isApplied ? grayed : Color(0xFF0074E4),
+                            deal.isApplied ? grayed : Color(0xFF0074E4),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
-                          widget.deal.isApplied
+                          deal.isApplied
                               ? "Claimed!"
                               : "Claim this offer",
                           style: TextStyle(
