@@ -65,11 +65,14 @@ class _DealDetailsState extends State<DealDetails> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: IconButton(
-                      onPressed: () => {},
+                      onPressed: () =>
+                          {mainViewModel.toggleCompanyLike(company)},
                       icon: Icon(
-                        Icons.favorite,
+                        company.isLiked
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined,
                         size: 40,
-                        color: Colors.red,
+                        color: company.isLiked ? Colors.red : Colors.grey,
                       ),
                     ),
                   ),
@@ -86,8 +89,7 @@ class _DealDetailsState extends State<DealDetails> {
                     ),
                   ),
                   _detailsListTile(
-                      title: company.location,
-                      icon: Icons.location_pin),
+                      title: company.location, icon: Icons.location_pin),
                   _detailsListTile(
                     title: company.phone,
                     icon: Icons.phone_android,
