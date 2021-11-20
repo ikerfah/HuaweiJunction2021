@@ -1,3 +1,5 @@
+import 'package:huawei_map/components/latLng.dart';
+
 class Company {
   int id;
   String name;
@@ -6,6 +8,7 @@ class Company {
   String location;
   String phone;
   String website;
+  LatLng latLng;
 
 
   Company({
@@ -15,6 +18,7 @@ class Company {
     required this.rating,
     required this.location,
     required this.phone,
-    required this.website
+    required this.website,
+    required this.latLng,
   });
 }
