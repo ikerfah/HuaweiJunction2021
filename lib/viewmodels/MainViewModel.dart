@@ -60,7 +60,8 @@ class MainViewModel extends ChangeNotifier {
         description: "Exclusive Offer",
         imagePath: "assets/shoes_nike.png",
         companyId: nike.id,
-        dealValidity: "20 Jan, 2021");
+        dealValidity: "20 Jan, 2021",
+        isApplied: true);
     final deal3 = Deal(
         id: 3,
         title: "75% Discount",
@@ -78,7 +79,7 @@ class MainViewModel extends ChangeNotifier {
       title: "Shoes",
     );
     final interest3 = Interest(id: 2, title: "T-Shirts");
-    _companies = [nike,rax];
+    _companies = [nike, rax];
     _deals = [deal1, deal2, deal3, exclusiveDeal1, exclusiveDeal2];
     _interests = [interest1, interest2, interest3];
   }
@@ -98,16 +99,22 @@ class MainViewModel extends ChangeNotifier {
     return _interests;
   }
 
-  List<Company> getCompanies(){
+  List<Company> getCompanies() {
     return _companies;
   }
 
-  Company getCompanyById(int companyId){
+  Company getCompanyById(int companyId) {
     return _companies.firstWhere((element) => element.id == companyId);
   }
 
-  void toggleCompanyLike(Company company){
-    _companies.firstWhere((item) => item.id == company.id).isLiked = !company.isLiked;
+  void toggleCompanyLike(Company company) {
+    _companies.firstWhere((item) => item.id == company.id).isLiked =
+        !company.isLiked;
+    notifyListeners();
+  }
+
+  void claimOffer(Deal deal) {
+    _deals.firstWhere((item) => item.id == deal.id).isApplied = true;
     notifyListeners();
   }
 }

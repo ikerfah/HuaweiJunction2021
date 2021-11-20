@@ -1,6 +1,7 @@
 import 'package:HMSFlutter/core/models/Company.dart';
 import 'package:HMSFlutter/core/models/Deal.dart';
 import 'package:HMSFlutter/ui/home/ItemDeal.dart';
+import 'package:HMSFlutter/utils/Colors.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -106,14 +107,19 @@ class _DealDetailsState extends State<DealDetails> {
                     margin: const EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 15.0),
                     child: TextButton(
-                      onPressed: () => {},
+                      onPressed: widget.deal.isApplied
+                          ? null
+                          : () => {mainViewModel.claimOffer(widget.deal)},
                       style: TextButton.styleFrom(
-                        backgroundColor: Color(0xFF0074E4),
+                        backgroundColor:
+                            widget.deal.isApplied ? grayed : Color(0xFF0074E4),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
-                          "Claim this offer",
+                          widget.deal.isApplied
+                              ? "Claimed!"
+                              : "Claim this offer",
                           style: TextStyle(
                             color: Colors.white,
                           ),

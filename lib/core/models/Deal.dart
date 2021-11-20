@@ -8,6 +8,7 @@ class Deal {
   int companyId;
   String dealValidity;
   bool isExclusive;
+  bool isApplied;
 
 
   Deal({
@@ -17,7 +18,8 @@ class Deal {
     required this.imagePath,
     required this.companyId,
     required this.dealValidity,
-    this.isExclusive = false
+    this.isExclusive = false,
+    this.isApplied = false
   });
 
   String heroTag(){
