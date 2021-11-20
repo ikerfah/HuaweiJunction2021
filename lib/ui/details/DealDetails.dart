@@ -1,6 +1,10 @@
+import 'dart:collection';
+
 import 'package:HMSFlutter/core/models/Company.dart';
+import 'package:HMSFlutter/core/models/CustomMarker.dart';
 import 'package:HMSFlutter/core/models/Deal.dart';
 import 'package:HMSFlutter/ui/home/ItemDeal.dart';
+import 'package:HMSFlutter/ui/map/MapComponent.dart';
 import 'package:HMSFlutter/utils/Colors.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
@@ -105,6 +109,19 @@ class _DealDetailsState extends State<DealDetails> {
                     icon: Icons.av_timer,
                   ),
                   Container(
+                    height: MediaQuery.of(context).size.width,
+                    child: MapComponent(
+                      initialCameraTargetPosition: company.latLng,
+                      rotateGesturesEnabled: false,
+                      scrollGesturesEnabled: false,
+                      zoomControlsEnabled: true,
+                      zoomGesturesEnabled: false,
+                      tiltGesturesEnabled: false,
+                      markers: HashSet.from(
+                          [CustomMarker.factory(deal, company, null)]),
+                    ),
+                  ),
+                  Container(
                     margin: const EdgeInsets.symmetric(
                         vertical: 20.0, horizontal: 15.0),
                     child: TextButton(
@@ -118,9 +135,7 @@ class _DealDetailsState extends State<DealDetails> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
-                          deal.isApplied
-                              ? "Claimed!"
-                              : "Claim this offer",
+                          deal.isApplied ? "Claimed!" : "Claim this offer",
                           style: TextStyle(
                             color: Colors.white,
                           ),

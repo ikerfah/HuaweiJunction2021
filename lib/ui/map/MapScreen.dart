@@ -1,3 +1,5 @@
+import 'package:HMSFlutter/core/models/CustomMarker.dart';
+import 'package:HMSFlutter/ui/map/MapComponent.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
@@ -34,35 +36,22 @@ class _MapScreenState extends State<MapScreen> {
                 } else {
                   return Consumer<MainViewModel>(builder: (BuildContext context,
                       MainViewModel mainViewModel, Widget? child) {
-                    return HuaweiMap(
-                      mapToolbarEnabled: false,
-                      initialCameraPosition: CameraPosition(
-                        target: const LatLng(60.186343, 24.8175143),
-                        zoom: 13,
-                      ),
-                      myLocationButtonEnabled: true,
-                      myLocationEnabled: true,
-                      markersClusteringEnabled: true,
-                      markers: Set<Marker>.from(mainViewModel
-                              .getDeals()
-                              .map((deal) => Marker(
-                                    markerId: MarkerId('marker_id_${deal.id}'),
-                                    position: mainViewModel
-                                        .getCompanyById(deal.companyId)
-                                        .latLng,
-                                    clusterable: true,
-                                    infoWindow: InfoWindow(
-                                        title: '${deal.title}',
-                                        snippet: '${deal.description}',
-                                        onClick: () => {
-                                              Navigator.pushNamed(
-                                                  context, 'dealDetails',
-                                                  arguments: deal)
-                                            }),
-                                  ))
-                              .toList())
-                          .toSet(),
-                    );
+                    return MapComponent(
+                        markers: Set<Marker>.from(mainViewModel
+                                .getDeals()
+                                .map(
+                                  (deal) => CustomMarker.factory(
+                                      deal,
+                                      mainViewModel
+                                          .getCompanyById(deal.companyId),
+                                      (deal) => {
+                                            Navigator.of(context).pushNamed(
+                                                'dealDetails',
+                                                arguments: deal)
+                                          }),
+                                )
+                                .toList())
+                            .toSet());
                   });
                 }
               case ConnectionState.none:
