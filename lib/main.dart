@@ -1,11 +1,10 @@
-import 'package:HMSFlutter/core/repository/RemoteRepository.dart';
 import 'package:HMSFlutter/ui/details/DealDetails.dart';
 import 'package:HMSFlutter/ui/home/HomeScreen.dart';
 import 'package:HMSFlutter/ui/map/MapScreen.dart';
 import 'package:HMSFlutter/ui/profile/ProfileScreen.dart';
+import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
-import 'package:huawei_push/huawei_push_library.dart';
+import 'package:provider/provider.dart';
 
 import 'core/models/Deal.dart';
 
@@ -70,11 +69,14 @@ class _MyAppState extends State<MyApp> {
       home: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          body: IndexedStack(index: _pageIndex, children: <Widget>[
-            HomeScreen(),
-            MapScreen(),
-            ProfileScreen(),
-          ]),
+          body: ChangeNotifierProvider(
+            create: (context) => MainViewModel(),
+            child: IndexedStack(index: _pageIndex, children: <Widget>[
+              HomeScreen(),
+              MapScreen(),
+              ProfileScreen(),
+            ]),
+          ),
           bottomNavigationBar: BottomNavigationBar(
             showSelectedLabels: false,
             unselectedFontSize: 0.0,
@@ -83,12 +85,12 @@ class _MyAppState extends State<MyApp> {
             onTap: onTabTapped,
             items: [
               BottomNavigationBarItem(
-                label: "Map",
-                icon: Icon(Icons.map),
-              ),
-              BottomNavigationBarItem(
                 label: "Home",
                 icon: Icon(Icons.home),
+              ),
+              BottomNavigationBarItem(
+                label: "Map",
+                icon: Icon(Icons.map),
               ),
               BottomNavigationBarItem(
                 label: "Profile",

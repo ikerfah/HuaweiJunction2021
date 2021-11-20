@@ -9,6 +9,7 @@ class Company {
   String phone;
   String website;
   LatLng latLng;
+  bool isLiked;
 
 
   Company({
@@ -20,5 +21,6 @@ class Company {
     required this.phone,
     required this.website,
     required this.latLng,
+    this.isLiked = false,
   });
 }

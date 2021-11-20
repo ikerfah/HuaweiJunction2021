@@ -1,7 +1,8 @@
-import 'package:HMSFlutter/core/repository/RemoteRepository.dart';
+import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:huawei_hmsavailability/huawei_hmsavailability.dart';
 import 'package:huawei_map/map.dart';
+import 'package:provider/provider.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({Key? key}) : super(key: key);
@@ -31,18 +32,20 @@ class _MapScreenState extends State<MapScreen> {
                   return Text(
                       'Check HMS failed with ${snapshot.error.toString()}');
                 } else {
-                  return HuaweiMap(
-                    mapToolbarEnabled: false,
-                    initialCameraPosition: CameraPosition(
-                      target: const LatLng(60.186343, 24.8175143),
-                      zoom: 13,
-                    ),
-                    myLocationButtonEnabled: true,
-                    myLocationEnabled: true,
-                    markersClusteringEnabled: true,
-                    markers: Set<Marker>.from(RemoteRepository.getDeals()
-                            .map((deal) => 
-                                  Marker(
+                  return Consumer<MainViewModel>(builder: (BuildContext context,
+                      MainViewModel mainViewModel, Widget? child) {
+                    return HuaweiMap(
+                      mapToolbarEnabled: false,
+                      initialCameraPosition: CameraPosition(
+                        target: const LatLng(60.186343, 24.8175143),
+                        zoom: 13,
+                      ),
+                      myLocationButtonEnabled: true,
+                      myLocationEnabled: true,
+                      markersClusteringEnabled: true,
+                      markers: Set<Marker>.from(mainViewModel
+                              .getDeals()
+                              .map((deal) => Marker(
                                     markerId: MarkerId('marker_id_${deal.id}'),
                                     position: deal.company.latLng,
                                     clusterable: true,
@@ -54,11 +57,11 @@ class _MapScreenState extends State<MapScreen> {
                                                   context, 'dealDetails',
                                                   arguments: deal)
                                             }),
-                                  )
-                                )
-                            .toList())
-                        .toSet(),
-                  );
+                                  ))
+                              .toList())
+                          .toSet(),
+                    );
+                  });
                 }
               case ConnectionState.none:
                 return Text('Checking HMS disabled.');
