@@ -1,5 +1,6 @@
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:huawei_location/permission/permission_handler.dart';
 import 'package:huawei_map/map.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +28,25 @@ class MapComponent extends StatefulWidget {
 }
 
 class _MapComponentState extends State<MapComponent> {
+  PermissionHandler permissionHandler = PermissionHandler();
+  bool isLocationPermissionGranted = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+      try {
+        bool status = await permissionHandler.requestLocationPermission();
+        setState(() {
+          isLocationPermissionGranted = status;
+        });
+      } catch (e) {
+        print(e.toString);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MainViewModel>(builder: (context, mainViewModel, child) {
@@ -36,8 +56,8 @@ class _MapComponentState extends State<MapComponent> {
           target: widget.initialCameraTargetPosition,
           zoom: 13,
         ),
-        myLocationButtonEnabled: true,
-        myLocationEnabled: true,
+        myLocationButtonEnabled: isLocationPermissionGranted,
+        myLocationEnabled: isLocationPermissionGranted,
         markersClusteringEnabled: true,
         markers: widget.markers,
         rotateGesturesEnabled: widget.rotateGesturesEnabled,
