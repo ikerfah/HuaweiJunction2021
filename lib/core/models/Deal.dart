@@ -5,7 +5,7 @@ class Deal {
   String title;
   String description;
   String imagePath;
-  Company company;
+  int companyId;
   String dealValidity;
   bool isExclusive;
 
@@ -15,7 +15,7 @@ class Deal {
     required this.title,
     required this.description,
     required this.imagePath,
-    required this.company,
+    required this.companyId,
     required this.dealValidity,
     this.isExclusive = false
   });

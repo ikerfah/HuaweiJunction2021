@@ -18,7 +18,7 @@ class MainViewModel extends ChangeNotifier {
     );
 
     Company rax = Company(
-      id: 1,
+      id: 2,
       name: "Rax",
       logoPath: "assets/rax.png",
       rating: 3,
@@ -33,7 +33,7 @@ class MainViewModel extends ChangeNotifier {
       title: "25% OFF",
       description: "Exclusive Offer",
       imagePath: "assets/shoes_nike.png",
-      company: nike,
+      companyId: nike.id,
       dealValidity: "15 Dec, 2018",
       isExclusive: true,
     );
@@ -42,7 +42,7 @@ class MainViewModel extends ChangeNotifier {
       title: "30% OFF",
       description: "Exclusive Offer",
       imagePath: "assets/pizza.png",
-      company: rax,
+      companyId: rax.id,
       dealValidity: "20 Jan, 2021",
       isExclusive: true,
     );
@@ -52,21 +52,21 @@ class MainViewModel extends ChangeNotifier {
         title: "25% OFF",
         description: "Exclusive Offer",
         imagePath: "assets/shoes_nike.png",
-        company: nike,
+        companyId: nike.id,
         dealValidity: "15 Dec, 2018");
     final deal2 = Deal(
         id: 2,
         title: "30% OFF",
         description: "Exclusive Offer",
         imagePath: "assets/shoes_nike.png",
-        company: nike,
+        companyId: nike.id,
         dealValidity: "20 Jan, 2021");
     final deal3 = Deal(
         id: 3,
         title: "75% Discount",
         description: "Premium Offer",
         imagePath: "assets/pizza.png",
-        company: rax,
+        companyId: rax.id,
         dealValidity: "29 Nov, 2021");
 
     final interest1 = Interest(
@@ -78,10 +78,12 @@ class MainViewModel extends ChangeNotifier {
       title: "Shoes",
     );
     final interest3 = Interest(id: 2, title: "T-Shirts");
+    _companies = [nike,rax];
     _deals = [deal1, deal2, deal3, exclusiveDeal1, exclusiveDeal2];
     _interests = [interest1, interest2, interest3];
   }
 
+  late List<Company> _companies;
   late List<Deal> _deals;
   late List<Interest> _interests;
   List<Deal> getExclusiveDeals() {
@@ -94,5 +96,18 @@ class MainViewModel extends ChangeNotifier {
 
   List<Interest> getInterests() {
     return _interests;
+  }
+
+  List<Company> getCompanies(){
+    return _companies;
+  }
+
+  Company getCompanyById(int companyId){
+    return _companies.firstWhere((element) => element.id == companyId);
+  }
+
+  void toggleCompanyLike(Company company){
+    _companies.firstWhere((item) => item.id == company.id).isLiked = !company.isLiked;
+    notifyListeners();
   }
 }

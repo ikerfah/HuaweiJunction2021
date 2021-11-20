@@ -47,7 +47,9 @@ class _MapScreenState extends State<MapScreen> {
                               .getDeals()
                               .map((deal) => Marker(
                                     markerId: MarkerId('marker_id_${deal.id}'),
-                                    position: deal.company.latLng,
+                                    position: mainViewModel
+                                        .getCompanyById(deal.companyId)
+                                        .latLng,
                                     clusterable: true,
                                     infoWindow: InfoWindow(
                                         title: '${deal.title}',

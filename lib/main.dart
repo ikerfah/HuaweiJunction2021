@@ -43,62 +43,66 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HMS Flutter starter app',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      initialRoute: '/',
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case 'dealDetails':
-            {
-              final deal = settings.arguments as Deal;
-              return MaterialPageRoute(builder: (context) {
-                return SafeArea(
-                    child: Material(child: DealDetails(deal: deal)));
-              });
-            }
-          default:
-            {
-              assert(false, 'Need to implement ${settings.name}');
-            }
-        }
-      },
-      home: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: ChangeNotifierProvider(
-            create: (context) => MainViewModel(),
-            child: IndexedStack(index: _pageIndex, children: <Widget>[
+    return ChangeNotifierProvider<MainViewModel>(
+      create: (context) => MainViewModel(),
+      child: MaterialApp(
+        title: 'HMS Flutter starter app',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.deepPurple,
+        ),
+        initialRoute: '/',
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case 'dealDetails':
+              {
+                final deal = settings.arguments as Deal;
+
+                return MaterialPageRoute(builder: (context) {
+                  return SafeArea(
+                    child: Material(
+                      child: DealDetails(deal: deal),
+                    ),
+                  );
+                });
+              }
+            default:
+              {
+                assert(false, 'Need to implement ${settings.name}');
+              }
+          }
+        },
+        home: SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: IndexedStack(index: _pageIndex, children: <Widget>[
               HomeScreen(),
               MapScreen(),
               ProfileScreen(),
             ]),
+            bottomNavigationBar: BottomNavigationBar(
+              showSelectedLabels: false,
+              unselectedFontSize: 0.0,
+              backgroundColor: Colors.white,
+              currentIndex: _pageIndex,
+              onTap: onTabTapped,
+              items: [
+                BottomNavigationBarItem(
+                  label: "Home",
+                  icon: Icon(Icons.home),
+                ),
+                BottomNavigationBarItem(
+                  label: "Map",
+                  icon: Icon(Icons.map),
+                ),
+                BottomNavigationBarItem(
+                  label: "Profile",
+                  icon: Icon(Icons.account_circle_rounded),
+                )
+              ],
+            ),
+            floatingActionButton: null,
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            showSelectedLabels: false,
-            unselectedFontSize: 0.0,
-            backgroundColor: Colors.white,
-            currentIndex: _pageIndex,
-            onTap: onTabTapped,
-            items: [
-              BottomNavigationBarItem(
-                label: "Home",
-                icon: Icon(Icons.home),
-              ),
-              BottomNavigationBarItem(
-                label: "Map",
-                icon: Icon(Icons.map),
-              ),
-              BottomNavigationBarItem(
-                label: "Profile",
-                icon: Icon(Icons.account_circle_rounded),
-              )
-            ],
-          ),
-          floatingActionButton: null,
         ),
       ),
     );

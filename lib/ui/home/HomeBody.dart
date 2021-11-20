@@ -1,5 +1,6 @@
 import 'package:HMSFlutter/core/models/Deal.dart';
 import 'package:HMSFlutter/core/models/Interest.dart';
+import 'package:HMSFlutter/ui/details/DealDetails.dart';
 import 'package:HMSFlutter/ui/home/DealsListing.dart';
 import 'package:HMSFlutter/ui/home/ItemInterest.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
@@ -24,7 +25,6 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   void onDealClicked(Deal deal) {
-    print("clicked!");
     Navigator.pushNamed(context, 'dealDetails', arguments: deal);
   }
 
