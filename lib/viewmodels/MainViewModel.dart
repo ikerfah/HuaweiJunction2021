@@ -87,7 +87,7 @@ class MainViewModel extends ChangeNotifier {
 
     _companies = [nike, rax];
     _deals = [deal1, deal2, deal3, exclusiveDeal1, exclusiveDeal2];
-    _interests = [interest0,interest1, interest2, interest3];
+    _interests = [interest0, interest1, interest2, interest3];
   }
 
   late List<Company> _companies;
@@ -99,12 +99,17 @@ class MainViewModel extends ChangeNotifier {
   }
 
   List<Deal> getDeals() {
-    return _deals
-        .where((deal) =>
-            !deal.isExclusive &&
-            (selectedInterest.id == 0
-                ? true
-                : deal.interestId == selectedInterest.id))
+    List<Interest> _checkedInterests = getCheckedInterests(excludeAll: true);
+    List<Deal> noExclusiveDeals =
+        _deals.where((deal) => !deal.isExclusive).toList();
+
+    if (selectedInterest.id == 0) {
+      return noExclusiveDeals
+          .where((deal) =>_checkedInterests.where((element) =>element.id== deal.interestId).length>0)
+          .toList();
+    }
+    return noExclusiveDeals
+        .where((deal) => deal.interestId == selectedInterest.id)
         .toList();
   }
 

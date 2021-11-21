@@ -31,6 +31,7 @@ class _HomeBodyState extends State<HomeBody> {
     return Consumer<MainViewModel>(builder:
         (BuildContext context, MainViewModel mainViewModel, Widget? child) {
       List<Deal> deals = mainViewModel.getDeals();
+      List<Interest> checkedInterests = mainViewModel.getCheckedInterests();
 
       return Column(
         children: [
@@ -39,57 +40,61 @@ class _HomeBodyState extends State<HomeBody> {
           ),
           Expanded(
             flex: 3,
-            child: Column(
-              children: [
-                Container(
-                  height: 50,
-                  color: Colors.white,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return ItemInterest(
-                        interest: mainViewModel.getCheckedInterests()[index],
-                        selectedInterest: mainViewModel.selectedInterest,
-                        onTap: (selectedInterest) {
-                          setState(() {
-                            mainViewModel.setSelectedInterest(selectedInterest);
-                          });
-                        },
-                      );
-                    },
-                    itemCount: mainViewModel.getCheckedInterests().length,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: deals.isEmpty
-                        ? Center(
-                            child: Text("No deals"),
-                          )
-                        : ListView.separated(
-                            itemBuilder: (context, index) {
-                              return Hero(
-                                tag: deals[index].heroTag(),
-                                child: ItemDeal(
-                                  deal: deals[index],
-                                  borderColor: Color(0xFFE7ECEE),
-                                  onTap: (deal) => onDealClicked(deal),
+            child: checkedInterests.length < 2
+                ? //only All in the interests list, hide all the deals
+                Center(
+                    child: Text("You have no interests preferences"),
+                  )
+                : Column(
+                    children: [
+                      Container(
+                        height: 50,
+                        color: Colors.white,
+                        child: ListView.builder(
+                          itemBuilder: (context, index) {
+                            return ItemInterest(
+                              interest: checkedInterests[index],
+                              selectedInterest: mainViewModel.selectedInterest,
+                              onTap: (selectedInterest) {
+                                mainViewModel
+                                    .setSelectedInterest(selectedInterest);
+                              },
+                            );
+                          },
+                          itemCount: checkedInterests.length,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: deals.isEmpty
+                              ? Center(
+                                  child: Text("No deals"),
+                                )
+                              : ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    return Hero(
+                                      tag: deals[index].heroTag(),
+                                      child: ItemDeal(
+                                        deal: deals[index],
+                                        borderColor: Color(0xFFE7ECEE),
+                                        onTap: (deal) => onDealClicked(deal),
+                                      ),
+                                    );
+                                  },
+                                  itemCount: deals.length,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      height: 10.0,
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                            itemCount: deals.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                height: 10.0,
-                              );
-                            },
-                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           )
         ],
       );
