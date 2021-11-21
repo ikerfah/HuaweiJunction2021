@@ -1,5 +1,6 @@
 import 'package:HMSFlutter/core/models/Company.dart';
 import 'package:HMSFlutter/core/models/Deal.dart';
+import 'package:HMSFlutter/utils/Colors.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,12 +61,6 @@ class ItemDeal extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      "${deal.description}",
-                      style: TextStyle(
-                        color: Color(0xFF71828A),
-                      ),
-                    ),
                     Row(
                       children: [
                         Chip(
@@ -87,6 +82,16 @@ class ItemDeal extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                           backgroundColor: Color(0xFF0074E4),
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Chip(
+                          label: Text(
+                            "${deal.claimAmount} €",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Color(0xFFCF1E43),
                         )
                       ],
                     )
@@ -101,7 +106,9 @@ class ItemDeal extends StatelessWidget {
           textDirection: TextDirection.ltr,
           location: BannerLocation.topEnd,
           message: 'Claimed',
-          color: Color(0xFF0074E4),
+          color: borderColor,
+          textStyle:
+              TextStyle(color: Colors.black.withOpacity(0.2), fontSize: 10.0),
           child: child,
         );
       }

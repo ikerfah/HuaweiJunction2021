@@ -53,7 +53,7 @@ class MainViewModel extends ChangeNotifier {
         description: "Exclusive Offer",
         imagePath: "assets/pizza.png",
         companyId: rax.id,
-        dealValidity: "20 Jan, 2021",
+        dealValidity: "20 Dec, 2021",
         isExclusive: true,
         claimAmount: 20,
         interestId: interest2.id);
@@ -64,7 +64,7 @@ class MainViewModel extends ChangeNotifier {
         description: "Exclusive Offer",
         imagePath: "assets/shoes_nike.png",
         companyId: nike.id,
-        dealValidity: "15 Dec, 2018",
+        dealValidity: "15 Dec, 2021",
         claimAmount: 5,
         interestId: interest1.id);
     final deal2 = Deal(
@@ -73,7 +73,7 @@ class MainViewModel extends ChangeNotifier {
         description: "Exclusive Offer",
         imagePath: "assets/shoes_nike.png",
         companyId: nike.id,
-        dealValidity: "20 Jan, 2021",
+        dealValidity: "29 Nov, 2021",
         isApplied: true,
         claimAmount: 4,
         interestId: interest1.id);
@@ -83,7 +83,7 @@ class MainViewModel extends ChangeNotifier {
         description: "Premium Offer",
         imagePath: "assets/pizza.png",
         companyId: rax.id,
-        dealValidity: "29 Nov, 2021",
+        dealValidity: "27 Nov, 2021",
         claimAmount: 2,
         interestId: interest2.id);
 
