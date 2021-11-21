@@ -97,6 +97,19 @@ class MainViewModel extends ChangeNotifier {
   late List<Interest> _interests;
   late Interest selectedInterest;
   int claimedAmount = 250;
+
+  bool shareYourLocation = false;
+  bool shareYourSearches = false;
+  void toggleShareYourLocation(){
+    shareYourLocation = !shareYourLocation;
+    notifyListeners();
+  }
+
+  void toggleShareYourSearches(){
+    shareYourSearches = !shareYourSearches;
+    notifyListeners();
+  }
+
   List<Deal> getExclusiveDeals() {
     return _deals.where((deal) => deal.isExclusive).toList();
   }
