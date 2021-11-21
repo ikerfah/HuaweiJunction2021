@@ -26,7 +26,7 @@ class MainViewModel extends ChangeNotifier {
       location: "Central 00223, Espoo",
       phone: "+358 44-333-2123",
       website: "https://www.rax.com",
-      distance: 3,
+      distance: 2,
       latLng: LatLng(60.199143, 24.8029143),
     );
 
