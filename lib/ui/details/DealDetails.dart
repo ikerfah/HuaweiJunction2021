@@ -93,6 +93,7 @@ class _DealDetailsState extends State<DealDetails> {
                     tag: widget.deal.heroTag(),
                     child: ItemDeal(
                       deal: deal,
+                      showClaimedBanner: false
                     ),
                   ),
                   _detailsListTile(
