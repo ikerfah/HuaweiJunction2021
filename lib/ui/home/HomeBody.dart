@@ -17,8 +17,6 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-  Interest? selectedInterest;
-
   @override
   void initState() {
     super.initState();
@@ -32,7 +30,8 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     return Consumer<MainViewModel>(builder:
         (BuildContext context, MainViewModel mainViewModel, Widget? child) {
-      selectedInterest = selectedInterest ?? mainViewModel.getInterests()[0];
+      List<Deal> deals = mainViewModel.getDeals();
+
       return Column(
         children: [
           Expanded(
@@ -49,10 +48,10 @@ class _HomeBodyState extends State<HomeBody> {
                     itemBuilder: (context, index) {
                       return ItemInterest(
                         interest: mainViewModel.getCheckedInterests()[index],
-                        selectedInterest: selectedInterest,
+                        selectedInterest: mainViewModel.selectedInterest,
                         onTap: (selectedInterest) {
                           setState(() {
-                            this.selectedInterest = selectedInterest;
+                            mainViewModel.setSelectedInterest(selectedInterest);
                           });
                         },
                       );
@@ -64,24 +63,29 @@ class _HomeBodyState extends State<HomeBody> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return Hero(
-                          tag: mainViewModel.getDeals()[index].heroTag(),
-                          child: ItemDeal(
-                            deal: mainViewModel.getDeals()[index],
-                            borderColor: Color(0xFFE7ECEE),
-                            onTap: (deal) => onDealClicked(deal),
+                    child: deals.isEmpty
+                        ? Center(
+                            child: Text("No deals"),
+                          )
+                        : ListView.separated(
+                            itemBuilder: (context, index) {
+                              return Hero(
+                                tag: deals[index].heroTag(),
+                                child: ItemDeal(
+                                  deal: deals[index],
+                                  borderColor: Color(0xFFE7ECEE),
+                                  onTap: (deal) => onDealClicked(deal),
+                                ),
+                              );
+                            },
+                            itemCount: deals.length,
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                height: 10.0,
+                              );
+                            },
                           ),
-                        );
-                      },
-                      itemCount: mainViewModel.getDeals().length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          height: 10.0,
-                        );
-                      },
-                    ),
                   ),
                 ),
               ],

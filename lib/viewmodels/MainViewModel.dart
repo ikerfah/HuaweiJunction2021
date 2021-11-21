@@ -28,82 +28,89 @@ class MainViewModel extends ChangeNotifier {
       latLng: LatLng(60.199143, 24.8029143),
     );
 
+    final interest0 = Interest(id: 0, title: "All", isChecked: true);
+    selectedInterest = interest0;
+    final interest1 = Interest(id: 1, title: "Shoes", isChecked: true);
+
+    final interest2 = Interest(id: 2, title: "Food", isChecked: true);
+    final interest3 = Interest(id: 3, title: "T-Shirts");
+
     final exclusiveDeal1 = Deal(
-      id: 1,
-      title: "25% OFF",
-      description: "Exclusive Offer",
-      imagePath: "assets/shoes_nike.png",
-      companyId: nike.id,
-      dealValidity: "15 Dec, 2018",
-      isExclusive: true,
-      claimAmount: 10,
-    );
+        id: 1,
+        title: "25% OFF",
+        description: "Exclusive Offer",
+        imagePath: "assets/shoes_nike.png",
+        companyId: nike.id,
+        dealValidity: "15 Dec, 2018",
+        isExclusive: true,
+        claimAmount: 10,
+        interestId: interest1.id);
     final exclusiveDeal2 = Deal(
-      id: 2,
-      title: "30% OFF",
-      description: "Exclusive Offer",
-      imagePath: "assets/pizza.png",
-      companyId: rax.id,
-      dealValidity: "20 Jan, 2021",
-      isExclusive: true,
-      claimAmount: 20,
-    );
+        id: 2,
+        title: "30% OFF",
+        description: "Exclusive Offer",
+        imagePath: "assets/pizza.png",
+        companyId: rax.id,
+        dealValidity: "20 Jan, 2021",
+        isExclusive: true,
+        claimAmount: 20,
+        interestId: interest2.id);
 
     final deal1 = Deal(
-      id: 1,
-      title: "25% OFF",
-      description: "Exclusive Offer",
-      imagePath: "assets/shoes_nike.png",
-      companyId: nike.id,
-      dealValidity: "15 Dec, 2018",
-      claimAmount: 5,
-    );
+        id: 1,
+        title: "25% OFF",
+        description: "Exclusive Offer",
+        imagePath: "assets/shoes_nike.png",
+        companyId: nike.id,
+        dealValidity: "15 Dec, 2018",
+        claimAmount: 5,
+        interestId: interest1.id);
     final deal2 = Deal(
-      id: 2,
-      title: "30% OFF",
-      description: "Exclusive Offer",
-      imagePath: "assets/shoes_nike.png",
-      companyId: nike.id,
-      dealValidity: "20 Jan, 2021",
-      isApplied: true,
-      claimAmount: 4,
-    );
+        id: 2,
+        title: "30% OFF",
+        description: "Exclusive Offer",
+        imagePath: "assets/shoes_nike.png",
+        companyId: nike.id,
+        dealValidity: "20 Jan, 2021",
+        isApplied: true,
+        claimAmount: 4,
+        interestId: interest1.id);
     final deal3 = Deal(
-      id: 3,
-      title: "75% Discount",
-      description: "Premium Offer",
-      imagePath: "assets/pizza.png",
-      companyId: rax.id,
-      dealValidity: "29 Nov, 2021",
-      claimAmount: 2,
-    );
+        id: 3,
+        title: "75% Discount",
+        description: "Premium Offer",
+        imagePath: "assets/pizza.png",
+        companyId: rax.id,
+        dealValidity: "29 Nov, 2021",
+        claimAmount: 2,
+        interestId: interest2.id);
 
-    final interest1 = Interest(id: 0, title: "All", isChecked: true);
-    final interest2 = Interest(id: 1, title: "Shoes", isChecked: true);
-
-    final interest3 = Interest(id: 2, title: "Food", isChecked: true);
-    final interest4 = Interest(id: 3, title: "T-Shirts");
     _companies = [nike, rax];
     _deals = [deal1, deal2, deal3, exclusiveDeal1, exclusiveDeal2];
-    _interests = [interest1, interest2, interest3, interest4];
+    _interests = [interest0,interest1, interest2, interest3];
   }
 
   late List<Company> _companies;
   late List<Deal> _deals;
   late List<Interest> _interests;
+  late Interest selectedInterest;
   List<Deal> getExclusiveDeals() {
     return _deals.where((deal) => deal.isExclusive).toList();
   }
 
   List<Deal> getDeals() {
-    return _deals.where((deal) => !deal.isExclusive).toList();
+    return _deals
+        .where((deal) =>
+            !deal.isExclusive &&
+            (selectedInterest.id == 0
+                ? true
+                : deal.interestId == selectedInterest.id))
+        .toList();
   }
 
   List<Interest> getInterests({bool excludeAll = false}) {
     if (excludeAll) {
-      return _interests
-          .where((element) => element.id != 0)
-          .toList();
+      return _interests.where((element) => element.id != 0).toList();
     } else {
       return _interests;
     }
@@ -140,6 +147,11 @@ class MainViewModel extends ChangeNotifier {
   void toggleInterestLike(Interest interest) {
     _interests.firstWhere((item) => item.id == interest.id).isChecked =
         !interest.isChecked;
+    notifyListeners();
+  }
+
+  void setSelectedInterest(Interest interest) {
+    selectedInterest = interest;
     notifyListeners();
   }
 

@@ -10,6 +10,7 @@ class Deal {
   bool isExclusive;
   bool isApplied;
   int claimAmount;
+  int interestId;
 
 
   Deal({
@@ -20,6 +21,7 @@ class Deal {
     required this.companyId,
     required this.dealValidity,
     required this.claimAmount,
+    required this.interestId,
     this.isExclusive = false,
     this.isApplied = false
   });
