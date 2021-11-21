@@ -84,7 +84,7 @@ class ItemDeal extends StatelessWidget {
                             ),
                             Chip(
                               label: Text(
-                                "3 Km",
+                                "${company.distance} Km",
                                 style: TextStyle(color: Colors.white),
                               ),
                               backgroundColor: Color(0xFF0074E4),

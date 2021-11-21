@@ -14,6 +14,7 @@ class MainViewModel extends ChangeNotifier {
       location: "Rastila 02600, Helsinki",
       phone: "+358 532-512-5125",
       website: "https://www.nike.com",
+      distance: 1,
       latLng: LatLng(60.186343, 24.8175143),
     );
 
@@ -25,6 +26,7 @@ class MainViewModel extends ChangeNotifier {
       location: "Central 00223, Espoo",
       phone: "+358 44-333-2123",
       website: "https://www.rax.com",
+      distance: 3,
       latLng: LatLng(60.199143, 24.8029143),
     );
 
@@ -94,7 +96,7 @@ class MainViewModel extends ChangeNotifier {
   late List<Deal> _deals;
   late List<Interest> _interests;
   late Interest selectedInterest;
-  int claimedAmount = 0;
+  int claimedAmount = 250;
   List<Deal> getExclusiveDeals() {
     return _deals.where((deal) => deal.isExclusive).toList();
   }
