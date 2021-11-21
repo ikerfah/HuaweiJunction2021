@@ -14,16 +14,19 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
+  late Future _checkHMSFuture;
   @override
   void initState() {
     super.initState();
+
+    _checkHMSFuture = _checkHMS();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder<void>(
-          future: _checkHMS(),
+          future: _checkHMSFuture,
           builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.active:
