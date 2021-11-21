@@ -1,5 +1,7 @@
+import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -17,12 +19,17 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Text(
-              "Offers Galore",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                  color: Color(0xFF1D262C)),
+            child: Consumer<MainViewModel>(
+              builder: (context, mainViewModel, child) {
+                return Text(
+                "${mainViewModel.claimedAmount} €",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Color(0xFF1D262C)),
+              );
+
+              },
             ),
           ),
           CircleAvatar(

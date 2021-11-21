@@ -94,6 +94,7 @@ class MainViewModel extends ChangeNotifier {
   late List<Deal> _deals;
   late List<Interest> _interests;
   late Interest selectedInterest;
+  int claimedAmount = 0;
   List<Deal> getExclusiveDeals() {
     return _deals.where((deal) => deal.isExclusive).toList();
   }
@@ -105,7 +106,11 @@ class MainViewModel extends ChangeNotifier {
 
     if (selectedInterest.id == 0) {
       return noExclusiveDeals
-          .where((deal) =>_checkedInterests.where((element) =>element.id== deal.interestId).length>0)
+          .where((deal) =>
+              _checkedInterests
+                  .where((element) => element.id == deal.interestId)
+                  .length >
+              0)
           .toList();
     }
     return noExclusiveDeals
@@ -162,6 +167,7 @@ class MainViewModel extends ChangeNotifier {
 
   void claimOffer(Deal deal) {
     _deals.firstWhere((item) => item.id == deal.id).isApplied = true;
+    claimedAmount += deal.claimAmount;
     notifyListeners();
   }
 }
