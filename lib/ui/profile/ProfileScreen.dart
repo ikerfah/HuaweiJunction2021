@@ -30,7 +30,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        Divider()
+        Divider(),
+        ListTile(
+          onTap: (){
+            Navigator.pushNamed(context, "interestsScreen");
+          },
+          leading: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.settings)
+            ],
+          ),
+          title: Text("Interests"),
+        )
       ],
     );
   }

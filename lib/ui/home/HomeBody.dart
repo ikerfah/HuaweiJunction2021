@@ -48,7 +48,7 @@ class _HomeBodyState extends State<HomeBody> {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return ItemInterest(
-                        interest: mainViewModel.getInterests()[index],
+                        interest: mainViewModel.getCheckedInterests()[index],
                         selectedInterest: selectedInterest,
                         onTap: (selectedInterest) {
                           setState(() {
@@ -57,7 +57,7 @@ class _HomeBodyState extends State<HomeBody> {
                         },
                       );
                     },
-                    itemCount: mainViewModel.getInterests().length,
+                    itemCount: mainViewModel.getCheckedInterests().length,
                     scrollDirection: Axis.horizontal,
                   ),
                 ),

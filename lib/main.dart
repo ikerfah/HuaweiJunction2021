@@ -1,6 +1,7 @@
 import 'package:HMSFlutter/ui/details/DealDetails.dart';
 import 'package:HMSFlutter/ui/home/HomeScreen.dart';
 import 'package:HMSFlutter/ui/map/MapScreen.dart';
+import 'package:HMSFlutter/ui/profile/InterestsScreen.dart';
 import 'package:HMSFlutter/ui/profile/ProfileScreen.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,16 @@ class _MyAppState extends State<MyApp> {
                   return SafeArea(
                     child: Material(
                       child: DealDetails(deal: deal),
+                    ),
+                  );
+                });
+              }
+            case 'interestsScreen':
+              {
+                return MaterialPageRoute(builder: (context) {
+                  return SafeArea(
+                    child: Material(
+                      child: InterestsScreen(),
                     ),
                   );
                 });

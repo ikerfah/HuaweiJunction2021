@@ -50,46 +50,42 @@ class MainViewModel extends ChangeNotifier {
     );
 
     final deal1 = Deal(
-        id: 1,
-        title: "25% OFF",
-        description: "Exclusive Offer",
-        imagePath: "assets/shoes_nike.png",
-        companyId: nike.id,
-        dealValidity: "15 Dec, 2018",
-        claimAmount: 5,
-        );
-    final deal2 = Deal(
-        id: 2,
-        title: "30% OFF",
-        description: "Exclusive Offer",
-        imagePath: "assets/shoes_nike.png",
-        companyId: nike.id,
-        dealValidity: "20 Jan, 2021",
-        isApplied: true,
-        claimAmount: 4,
-        );
-    final deal3 = Deal(
-        id: 3,
-        title: "75% Discount",
-        description: "Premium Offer",
-        imagePath: "assets/pizza.png",
-        companyId: rax.id,
-        dealValidity: "29 Nov, 2021",
-        claimAmount: 2,
-        );
-
-    final interest1 = Interest(
-      id: 0,
-      title: "All",
-    );
-    final interest2 = Interest(
       id: 1,
-      title: "Shoes",
+      title: "25% OFF",
+      description: "Exclusive Offer",
+      imagePath: "assets/shoes_nike.png",
+      companyId: nike.id,
+      dealValidity: "15 Dec, 2018",
+      claimAmount: 5,
     );
-    final interest3 = Interest(id: 2, title: "T-Shirts");
+    final deal2 = Deal(
+      id: 2,
+      title: "30% OFF",
+      description: "Exclusive Offer",
+      imagePath: "assets/shoes_nike.png",
+      companyId: nike.id,
+      dealValidity: "20 Jan, 2021",
+      isApplied: true,
+      claimAmount: 4,
+    );
+    final deal3 = Deal(
+      id: 3,
+      title: "75% Discount",
+      description: "Premium Offer",
+      imagePath: "assets/pizza.png",
+      companyId: rax.id,
+      dealValidity: "29 Nov, 2021",
+      claimAmount: 2,
+    );
+
+    final interest1 = Interest(id: 0, title: "All", isChecked: true);
+    final interest2 = Interest(id: 1, title: "Shoes", isChecked: true);
+
+    final interest3 = Interest(id: 2, title: "Food", isChecked: true);
+    final interest4 = Interest(id: 3, title: "T-Shirts");
     _companies = [nike, rax];
     _deals = [deal1, deal2, deal3, exclusiveDeal1, exclusiveDeal2];
-    _interests = [interest1, interest2, interest3];
+    _interests = [interest1, interest2, interest3, interest4];
   }
 
   late List<Company> _companies;
@@ -103,8 +99,24 @@ class MainViewModel extends ChangeNotifier {
     return _deals.where((deal) => !deal.isExclusive).toList();
   }
 
-  List<Interest> getInterests() {
-    return _interests;
+  List<Interest> getInterests({bool excludeAll = false}) {
+    if (excludeAll) {
+      return _interests
+          .where((element) => element.id != 0)
+          .toList();
+    } else {
+      return _interests;
+    }
+  }
+
+  List<Interest> getCheckedInterests({bool excludeAll = false}) {
+    if (excludeAll) {
+      return _interests
+          .where((element) => element.id != 0 && element.isChecked)
+          .toList();
+    } else {
+      return _interests.where((element) => element.isChecked).toList();
+    }
   }
 
   List<Company> getCompanies() {
@@ -122,6 +134,12 @@ class MainViewModel extends ChangeNotifier {
   void toggleCompanyLike(Company company) {
     _companies.firstWhere((item) => item.id == company.id).isLiked =
         !company.isLiked;
+    notifyListeners();
+  }
+
+  void toggleInterestLike(Interest interest) {
+    _interests.firstWhere((item) => item.id == interest.id).isChecked =
+        !interest.isChecked;
     notifyListeners();
   }
 
