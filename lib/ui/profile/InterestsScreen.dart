@@ -35,7 +35,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
             ),
             Divider(),
             Text(
-              "Partner Users Program",
+              "Dividend Users Program",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Padding(
