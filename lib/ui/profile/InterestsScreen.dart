@@ -35,13 +35,13 @@ class _InterestsScreenState extends State<InterestsScreen> {
             ),
             Divider(),
             Text(
-              "dividends Users Program",
+              "Dividends Partner Program",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Allow us to use more privacy data anonymously and join our partner program to earn comission monthly",
+                "Allow us to use more privacy data anonymously and join our dividends partner program to earn comission monthly",
                 style: TextStyle(
                   fontSize: 10.0,
                   color: grayed,
