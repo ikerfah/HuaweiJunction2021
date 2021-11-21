@@ -41,7 +41,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Allow us to use more privacy data anonymously and join our partner program to win comission monthly",
+                "Allow us to use more privacy data anonymously and join our partner program to earn comission monthly",
                 style: TextStyle(
                   fontSize: 10.0,
                   color: grayed,
