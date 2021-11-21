@@ -8,6 +8,7 @@ import 'package:HMSFlutter/ui/map/MapComponent.dart';
 import 'package:HMSFlutter/utils/Colors.dart';
 import 'package:HMSFlutter/viewmodels/MainViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:huawei_scan/HmsScanLibrary.dart';
 import 'package:provider/provider.dart';
 
 class DealDetails extends StatefulWidget {
@@ -127,7 +128,76 @@ class _DealDetailsState extends State<DealDetails> {
                     child: TextButton(
                       onPressed: deal.isApplied
                           ? null
-                          : () => {mainViewModel.claimOffer(deal)},
+                          : () async {
+                              bool? hasPermission = await HmsScanPermissions
+                                  .requestCameraAndStoragePermissions();
+                              if (hasPermission != null && hasPermission) {
+                                DefaultViewRequest request =
+                                    new DefaultViewRequest(
+                                        scanType: HmsScanTypes.QRCode);
+
+                                ScanResponse response =
+                                    await HmsScanUtils.startDefaultView(
+                                        request);
+                                String? result = response.showResult;
+                                if (result != null) {
+                                  mainViewModel.claimOffer(deal);
+                                  showDialog<void>(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Claimed!'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            Text(
+                                                "You have gained ${deal.claimAmount} €"),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Ok'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                }
+                              } else {
+                                showDialog<void>(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Permission required'),
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: const <Widget>[
+                                            Text(
+                                                'Camera and storage permission is required to scan'),
+                                          ],
+                                        ),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Ok'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+                            },
                       style: TextButton.styleFrom(
                         backgroundColor:
                             deal.isApplied ? grayed : Color(0xFF0074E4),
@@ -135,7 +205,7 @@ class _DealDetailsState extends State<DealDetails> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
-                          deal.isApplied ? "Claimed!" : "Claim this offer",
+                          deal.isApplied ? "Claimed!" : "Claim this offer for ${deal.claimAmount} €",
                           style: TextStyle(
                             color: Colors.white,
                           ),

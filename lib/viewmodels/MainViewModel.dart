@@ -36,6 +36,7 @@ class MainViewModel extends ChangeNotifier {
       companyId: nike.id,
       dealValidity: "15 Dec, 2018",
       isExclusive: true,
+      claimAmount: 10,
     );
     final exclusiveDeal2 = Deal(
       id: 2,
@@ -45,6 +46,7 @@ class MainViewModel extends ChangeNotifier {
       companyId: rax.id,
       dealValidity: "20 Jan, 2021",
       isExclusive: true,
+      claimAmount: 20,
     );
 
     final deal1 = Deal(
@@ -53,7 +55,9 @@ class MainViewModel extends ChangeNotifier {
         description: "Exclusive Offer",
         imagePath: "assets/shoes_nike.png",
         companyId: nike.id,
-        dealValidity: "15 Dec, 2018");
+        dealValidity: "15 Dec, 2018",
+        claimAmount: 5,
+        );
     final deal2 = Deal(
         id: 2,
         title: "30% OFF",
@@ -61,14 +65,18 @@ class MainViewModel extends ChangeNotifier {
         imagePath: "assets/shoes_nike.png",
         companyId: nike.id,
         dealValidity: "20 Jan, 2021",
-        isApplied: true);
+        isApplied: true,
+        claimAmount: 4,
+        );
     final deal3 = Deal(
         id: 3,
         title: "75% Discount",
         description: "Premium Offer",
         imagePath: "assets/pizza.png",
         companyId: rax.id,
-        dealValidity: "29 Nov, 2021");
+        dealValidity: "29 Nov, 2021",
+        claimAmount: 2,
+        );
 
     final interest1 = Interest(
       id: 0,

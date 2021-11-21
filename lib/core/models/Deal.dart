@@ -9,6 +9,7 @@ class Deal {
   String dealValidity;
   bool isExclusive;
   bool isApplied;
+  int claimAmount;
 
 
   Deal({
@@ -18,6 +19,7 @@ class Deal {
     required this.imagePath,
     required this.companyId,
     required this.dealValidity,
+    required this.claimAmount,
     this.isExclusive = false,
     this.isApplied = false
   });
